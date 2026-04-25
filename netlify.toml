@@ -1,4 +1,3 @@
 [build]
-  base = "study-abroad-project/"
   command = "yarn build"
   publish = "dist"
