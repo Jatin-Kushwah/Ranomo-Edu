@@ -131,13 +131,18 @@ import Button from '@/components/ui/Button.astro';
 </div>
 
 <script>
-  if (window.location.search.includes('submitted=true')) {
-    const banner = document.getElementById('success-banner');
-    const form = document.querySelector('form[name="contact"]');
-    if (banner) {
-      banner.classList.remove('hidden');
-      banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  function checkSubmitted() {
+    if (window.location.search.includes('submitted=true')) {
+      const banner = document.getElementById('success-banner');
+      const form = document.querySelector('form[name="contact"]');
+      if (banner) {
+        banner.classList.remove('hidden');
+        banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      if (form) form.classList.add('hidden');
     }
-    if (form) form.classList.add('hidden');
   }
+
+  checkSubmitted();
+  document.addEventListener('astro:after-swap', checkSubmitted);
 </script>
