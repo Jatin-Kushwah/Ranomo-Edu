@@ -5,7 +5,7 @@ import { services } from '@/data/services';
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'Study Abroad Services — Ranomo Edu',
+  name: 'Study Abroad Services — Ranamo Edu',
   itemListElement: services.map((s, i) => ({
     '@type': 'ListItem',
     position: i + 1,
@@ -13,7 +13,7 @@ const schema = {
       '@type': 'Service',
       name: s.title,
       description: s.shortDesc,
-      provider: { '@type': 'EducationalOrganization', name: 'Ranomo Edu' },
+      provider: { '@type': 'EducationalOrganization', name: 'Ranamo Edu' },
     },
   })),
 };

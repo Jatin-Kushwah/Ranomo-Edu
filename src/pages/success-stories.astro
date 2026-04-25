@@ -5,7 +5,7 @@ import { testimonials } from '@/data/testimonials';
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'Student Success Stories — Ranomo Edu',
+  name: 'Student Success Stories — Ranamo Edu',
   itemListElement: testimonials.map((t, i) => ({
     '@type': 'ListItem',
     position: i + 1,
@@ -13,7 +13,7 @@ const schema = {
       '@type': 'Review',
       reviewBody: t.quote,
       author: { '@type': 'Person', name: t.name },
-      itemReviewed: { '@type': 'EducationalOrganization', name: 'Ranomo Edu' },
+      itemReviewed: { '@type': 'EducationalOrganization', name: 'Ranamo Edu' },
       reviewRating: { '@type': 'Rating', ratingValue: 5, bestRating: 5 },
     },
   })),
@@ -22,7 +22,7 @@ const schema = {
 
 <BaseLayout
   title="Student Success Stories"
-  description="Real stories from students who studied abroad with Ranomo Edu. From Delhi to Toronto, Mumbai to Manchester — read how we helped them achieve their dreams."
+  description="Real stories from students who studied abroad with Ranamo Edu. From Delhi to Toronto, Mumbai to Manchester — read how we helped them achieve their dreams."
   schema={schema}
 >
   <main>

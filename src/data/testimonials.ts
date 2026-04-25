@@ -13,7 +13,7 @@ export const testimonials: Testimonial[] = [
     origin: 'Delhi, India',
     destination: 'University of Toronto, Canada',
     quote:
-      'Ranomo Edu made my dream of studying in Canada a reality. From university selection to visa approval, every step was handled professionally. I got a 50% scholarship on top of it!',
+      'Ranamo Edu made my dream of studying in Canada a reality. From university selection to visa approval, every step was handled professionally. I got a 50% scholarship on top of it!',
     year: 2024,
     photo: '/images/testimonials/priya.webp',
   },
@@ -31,7 +31,7 @@ export const testimonials: Testimonial[] = [
     origin: 'Kochi, India',
     destination: 'Technical University of Munich, Germany',
     quote:
-      'Germany was not even on my radar initially. Ranomo Edu showed me I could get a world-class engineering degree for almost no tuition. My SOP was refined through 5 rounds — worth every revision.',
+      'Germany was not even on my radar initially. Ranamo Edu showed me I could get a world-class engineering degree for almost no tuition. My SOP was refined through 5 rounds — worth every revision.',
     year: 2023,
     photo: '/images/testimonials/ayesha.webp',
   },
@@ -49,7 +49,7 @@ export const testimonials: Testimonial[] = [
     origin: 'Hyderabad, India',
     destination: 'Trinity College Dublin, Ireland',
     quote:
-      'As a working professional making a career shift, I needed a counselor who understood my situation. Ranomo Edu helped me craft a compelling SOP that explained my career break perfectly.',
+      'As a working professional making a career shift, I needed a counselor who understood my situation. Ranamo Edu helped me craft a compelling SOP that explained my career break perfectly.',
     year: 2023,
     photo: '/images/testimonials/sneha.webp',
   },

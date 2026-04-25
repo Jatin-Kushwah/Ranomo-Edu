@@ -6,7 +6,7 @@ export async function GET(context: APIContext) {
   const posts = await getCollection('blog');
 
   return rss({
-    title: 'Ranomo Edu Blog',
+    title: 'Ranamo Edu Blog',
     description: 'Expert insights on studying abroad — visa guides, scholarship tips, country comparisons, and student life.',
     site: context.site!,
     items: posts
