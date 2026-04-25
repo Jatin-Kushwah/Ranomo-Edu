@@ -1,0 +1,31 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import DestinationsStrip from '@/components/sections/DestinationsStrip.astro';
+import ServicesSection from '@/components/sections/ServicesSection.astro';
+import HowItWorks from '@/components/sections/HowItWorks.astro';
+import StatsSection from '@/components/sections/StatsSection.astro';
+import Testimonials from '@/components/sections/Testimonials.astro';
+import UniversityLogos from '@/components/sections/UniversityLogos.astro';
+import BlogTeaser from '@/components/sections/BlogTeaser.astro';
+import CTASection from '@/components/sections/CTASection.astro';
+import FAQSection from '@/components/sections/FAQSection.astro';
+---
+
+<BaseLayout
+  title="Study Abroad Consulting"
+  description="Expert study abroad counseling for UK, USA, Canada, Australia, Germany, New Zealand, and Ireland. University selection, visa support, scholarships — all under one roof."
+>
+  <main>
+    <Hero />
+    <DestinationsStrip />
+    <ServicesSection />
+    <HowItWorks />
+    <StatsSection />
+    <Testimonials />
+    <UniversityLogos />
+    <BlogTeaser />
+    <CTASection />
+    <FAQSection />
+  </main>
+</BaseLayout>

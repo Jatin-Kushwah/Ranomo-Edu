@@ -1,0 +1,59 @@
+﻿---
+import { testimonials } from '@/data/testimonials';
+---
+
+<section class="py-20 bg-white" aria-labelledby="testimonials-heading">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <span class="text-(--color-primary) font-semibold text-sm uppercase tracking-wider">Student Stories</span>
+      <h2 id="testimonials-heading" class="text-3xl sm:text-4xl font-bold text-(--color-dark) mt-2">
+        What Our Students Say
+      </h2>
+      <p class="text-(--color-text-muted) mt-4 max-w-xl mx-auto">
+        Real stories from students who turned their study abroad dreams into reality with Ranomo Edu.
+      </p>
+    </div>
+
+    <!-- CSS-only scroll-snap carousel -->
+    <div
+      class="flex gap-6 overflow-x-auto pb-6 snap-carousel hide-scrollbar"
+      role="list"
+      aria-label="Student testimonials"
+    >
+      {testimonials.map((t, i) => (
+        <article
+          class="flex-none w-80 sm:w-96 snap-start rounded-2xl border border-(--color-border) bg-(--color-bg) p-7 shadow-sm"
+          role="listitem"
+          data-aos="fade-up"
+          data-aos-delay={i * 80}
+        >
+          <!-- Quote mark -->
+          <div class="text-5xl text-(--color-primary)/20 font-serif leading-none mb-3" aria-hidden="true">"</div>
+
+          <blockquote class="text-(--color-text) leading-relaxed text-sm mb-6">
+            {t.quote}
+          </blockquote>
+
+          <div class="flex items-center gap-3 border-t border-(--color-border) pt-4">
+            <div class="w-10 h-10 rounded-full bg-(--color-primary) flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+              {t.name[0]}
+            </div>
+            <div>
+              <div class="font-semibold text-(--color-dark) text-sm">{t.name}</div>
+              <div class="text-xs text-(--color-text-muted)">{t.origin}</div>
+              <div class="text-xs text-(--color-primary) font-medium mt-0.5">{t.destination}</div>
+            </div>
+            <div class="ml-auto text-xs text-(--color-text-muted)">{t.year}</div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Dot indicators (visual only, CSS-driven) -->
+    <div class="flex justify-center gap-2 mt-4" aria-hidden="true">
+      {testimonials.map((_, i) => (
+        <div class={`h-2 rounded-full transition-all ${i === 0 ? 'w-6 bg-(--color-primary)' : 'w-2 bg-(--color-border)'}`}></div>
+      ))}
+    </div>
+  </div>
+</section>

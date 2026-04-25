@@ -1,0 +1,56 @@
+﻿---
+import { faqs } from '@/data/faq';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: answer,
+    },
+  })),
+};
+---
+
+<section class="py-20 bg-white" aria-labelledby="faq-heading">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <span class="text-(--color-primary) font-semibold text-sm uppercase tracking-wider">Got Questions?</span>
+      <h2 id="faq-heading" class="text-3xl sm:text-4xl font-bold text-(--color-dark) mt-2">
+        Frequently Asked Questions
+      </h2>
+      <p class="text-(--color-text-muted) mt-4 max-w-xl mx-auto">
+        Everything you need to know about studying abroad. Can't find the answer? Ask our counselors directly.
+      </p>
+    </div>
+
+    <div class="space-y-3" data-aos="fade-up">
+      {faqs.map((faq, i) => (
+        <details class="group rounded-xl border border-(--color-border) bg-(--color-bg) overflow-hidden">
+          <summary class="flex items-center justify-between px-6 py-5 cursor-pointer list-none font-semibold text-(--color-dark) hover:text-(--color-primary) transition-colors gap-4">
+            <span>{faq.question}</span>
+            <span class="faq-icon flex-none w-5 h-5 rounded-full bg-(--color-primary)/10 flex items-center justify-center text-(--color-primary) font-bold text-lg leading-none">
+              +
+            </span>
+          </summary>
+          <div class="px-6 pb-5 text-(--color-text-muted) leading-relaxed text-sm border-t border-(--color-border) pt-4">
+            {faq.answer}
+          </div>
+        </details>
+      ))}
+    </div>
+
+    <div class="mt-12 text-center p-8 rounded-2xl bg-blue-50 border border-blue-100" data-aos="fade-up">
+      <h3 class="font-bold text-(--color-dark) mb-2">Still have questions?</h3>
+      <p class="text-(--color-text-muted) text-sm mb-4">Our counselors are available Mon–Sat, 9am–7pm IST.</p>
+      <a href="/contact" class="inline-flex items-center gap-2 text-(--color-primary) font-semibold hover:underline">
+        Ask a counselor →
+      </a>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />

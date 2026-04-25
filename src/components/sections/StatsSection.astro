@@ -1,0 +1,70 @@
+﻿---
+const stats = [
+  { value: 5000, suffix: '+', label: 'Students Placed', desc: 'Across 15+ countries' },
+  { value: 200, suffix: '+', label: 'University Partners', desc: 'Top-ranked institutions' },
+  { value: 98, suffix: '%', label: 'Visa Success Rate', desc: 'Student visa approvals' },
+  { value: 500, suffix: '+', label: 'Scholarships Secured', desc: 'Worth ₹50+ crore' },
+];
+---
+
+<section class="py-20 bg-(--color-dark)" aria-labelledby="stats-heading" data-aos="fade-up">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <h2 id="stats-heading" class="sr-only">Our Impact in Numbers</h2>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+      {stats.map(({ value, suffix, label, desc }) => (
+        <div class="text-center">
+          <div
+            class="text-4xl sm:text-5xl font-bold text-(--color-accent) stats-number"
+            data-stat-target={value}
+          >
+            {value}{suffix}
+          </div>
+          <div class="text-white font-semibold mt-2">{label}</div>
+          <div class="text-slate-400 text-sm mt-1">{desc}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  function animateStats(): void {
+    const elements = document.querySelectorAll<HTMLElement>('[data-stat-target]');
+
+    elements.forEach((el) => {
+      const target = parseInt(el.dataset.statTarget ?? '0', 10);
+      const suffix = el.textContent?.replace(/\d/g, '') ?? '';
+      let current = 0;
+      const duration = 2000;
+      const stepTime = 30;
+      const steps = duration / stepTime;
+      const increment = target / steps;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              observer.disconnect();
+              const interval = setInterval(() => {
+                current = Math.min(current + increment, target);
+                el.textContent = Math.round(current).toLocaleString() + suffix;
+                if (current >= target) clearInterval(interval);
+              }, stepTime);
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+
+      observer.observe(el);
+    });
+  }
+
+  try {
+    animateStats();
+    document.addEventListener('astro:after-swap', animateStats);
+  } catch (e) {
+    // Degrade gracefully — static values already in DOM
+  }
+</script>

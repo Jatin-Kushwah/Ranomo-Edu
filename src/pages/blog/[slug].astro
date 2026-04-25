@@ -1,0 +1,105 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const date = post.data.pubDate.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  author: {
+    '@type': 'Organization',
+    name: 'Ranomo Edu',
+    url: 'https://ranomoedu.com',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Ranomo Edu',
+    url: 'https://ranomoedu.com',
+  },
+};
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  schema={schema}
+>
+  <main>
+    <!-- Header -->
+    <section class="bg-gradient-to-br from-(--color-primary) to-(--color-primary-dark) text-white py-20">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <nav aria-label="Breadcrumb" class="mb-6">
+          <ol class="flex items-center gap-2 text-sm text-blue-200">
+            <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+            <li aria-hidden="true">›</li>
+            <li><a href="/blog" class="hover:text-white transition-colors">Blog</a></li>
+            <li aria-hidden="true">›</li>
+            <li class="text-white font-medium truncate max-w-xs" aria-current="page">{post.data.title}</li>
+          </ol>
+        </nav>
+
+        <div class="flex gap-2 flex-wrap mb-4">
+          {post.data.tags.map((tag) => (
+            <span class="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-semibold">{tag}</span>
+          ))}
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{post.data.title}</h1>
+        <time class="text-blue-200 text-sm" datetime={post.data.pubDate.toISOString()}>
+          Published {date}
+        </time>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section class="py-16 bg-(--color-bg)">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
+          <!-- Article -->
+          <article class="lg:col-span-3 prose prose-blue max-w-none prose-headings:text-(--color-dark) prose-a:text-(--color-primary)">
+            <Content />
+          </article>
+
+          <!-- Sidebar -->
+          <aside class="lg:col-span-1">
+            <div class="sticky top-24 rounded-2xl bg-(--color-primary) text-white p-6">
+              <h3 class="font-bold text-lg mb-2">Talk to a Counselor</h3>
+              <p class="text-blue-100 text-sm mb-4">Have questions about the topic covered in this article? Our experts are ready to help.</p>
+              <a href="/contact" class="block text-center bg-white text-(--color-primary) font-bold py-3 rounded-xl hover:bg-blue-50 transition-colors text-sm">
+                Book Free Consultation
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back to blog -->
+    <section class="py-8 bg-white border-t border-(--color-border)">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <a href="/blog" class="inline-flex items-center gap-2 text-(--color-primary) font-semibold hover:underline">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4" aria-hidden="true">
+            <path d="M19 12H5M12 5l-7 7 7 7"/>
+          </svg>
+          Back to Blog
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

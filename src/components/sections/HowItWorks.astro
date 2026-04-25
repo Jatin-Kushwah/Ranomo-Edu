@@ -1,0 +1,101 @@
+﻿---
+const steps = [
+  {
+    number: '01',
+    title: 'Profile Assessment',
+    desc: 'We analyze your academics, test scores, budget, and career goals to understand your full potential.',
+    icon: '📋',
+  },
+  {
+    number: '02',
+    title: 'University Shortlisting',
+    desc: 'Get a curated list of 8–12 universities across reach, match, and safe categories tailored to your profile.',
+    icon: '🎯',
+  },
+  {
+    number: '03',
+    title: 'Application Support',
+    desc: 'We craft compelling SOPs, review LORs, and ensure every document meets each university\'s requirements.',
+    icon: '📝',
+  },
+  {
+    number: '04',
+    title: 'Visa Filing',
+    desc: 'Our visa experts prepare your file, brief you for the interview, and track your application to approval.',
+    icon: '✈️',
+  },
+  {
+    number: '05',
+    title: 'Arrival Support',
+    desc: 'Pre-departure orientation, accommodation guidance, and introduction to our alumni network in your city.',
+    icon: '🏠',
+  },
+];
+---
+
+<section class="py-20 bg-(--color-bg)" aria-labelledby="how-it-works-heading">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <span class="text-(--color-primary) font-semibold text-sm uppercase tracking-wider">The Process</span>
+      <h2 id="how-it-works-heading" class="text-3xl sm:text-4xl font-bold text-(--color-dark) mt-2">
+        How It Works
+      </h2>
+      <p class="text-(--color-text-muted) mt-4 max-w-xl mx-auto">
+        A proven 5-step process that has helped 5,000+ students successfully study abroad.
+      </p>
+    </div>
+
+    <!-- Desktop: horizontal timeline -->
+    <div class="hidden lg:flex items-start gap-0 relative">
+      <!-- Connecting line -->
+      <div class="absolute top-8 left-[calc(10%+24px)] right-[calc(10%+24px)] h-0.5 bg-(--color-primary)/20" aria-hidden="true"></div>
+
+      {steps.map((step, i) => (
+        <div
+          class="flex-1 flex flex-col items-center text-center px-3"
+          data-aos="fade-right"
+          data-aos-delay={i * 100}
+        >
+          <div class="relative w-16 h-16 rounded-full bg-(--color-primary) flex items-center justify-center text-white font-bold text-lg shadow-lg mb-4 z-10">
+            {step.number}
+          </div>
+          <div class="text-2xl mb-2" aria-hidden="true">{step.icon}</div>
+          <h3 class="font-bold text-(--color-dark) mb-2 text-sm">{step.title}</h3>
+          <p class="text-xs text-(--color-text-muted) leading-relaxed">{step.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Mobile: vertical list -->
+    <div class="lg:hidden space-y-6">
+      {steps.map((step, i) => (
+        <div
+          class="flex gap-5 items-start"
+          data-aos="fade-up"
+          data-aos-delay={i * 80}
+        >
+          <div class="flex-none w-12 h-12 rounded-full bg-(--color-primary) flex items-center justify-center text-white font-bold text-sm shadow">
+            {step.number}
+          </div>
+          <div>
+            <div class="text-xl mb-1" aria-hidden="true">{step.icon}</div>
+            <h3 class="font-bold text-(--color-dark) mb-1">{step.title}</h3>
+            <p class="text-sm text-(--color-text-muted) leading-relaxed">{step.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="text-center mt-14" data-aos="fade-up">
+      <a
+        href="/contact"
+        class="inline-flex items-center gap-2 bg-(--color-primary) text-white px-8 py-4 rounded-xl font-semibold hover:bg-(--color-primary-dark) transition-colors shadow-lg"
+      >
+        Start Your Journey
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

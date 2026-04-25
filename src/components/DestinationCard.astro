@@ -1,0 +1,39 @@
+﻿---
+import type { Destination } from '@/data/destinations';
+
+interface Props {
+  destination: Destination;
+}
+
+const { destination: dest } = Astro.props;
+---
+
+<a
+  href={`/destinations/${dest.slug}`}
+  class="group block rounded-2xl border border-(--color-border) bg-white p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200"
+>
+  <div class="flex items-start gap-4">
+    <span class={`fi fi-${dest.isoCode} text-4xl rounded flex-none`} aria-hidden="true"></span>
+    <div class="min-w-0">
+      <h3 class="font-bold text-(--color-dark) text-base group-hover:text-(--color-primary) transition-colors">
+        {dest.name}
+      </h3>
+      <p class="text-sm text-(--color-text-muted) mt-1 line-clamp-2">{dest.tagline}</p>
+    </div>
+  </div>
+
+  <div class="mt-4 flex flex-wrap gap-1.5">
+    {dest.popularCourses.slice(0, 3).map((course) => (
+      <span class="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-(--color-primary)">{course}</span>
+    ))}
+  </div>
+
+  <div class="mt-4 flex items-center justify-between text-xs">
+    <span class="text-(--color-text-muted)">
+      <strong class="text-(--color-dark)">{dest.avgTuitionRange.split('–')[0].trim()}</strong> – tuition from
+    </span>
+    <span class="text-(--color-primary) font-semibold group-hover:underline">
+      Learn more →
+    </span>
+  </div>
+</a>

@@ -1,0 +1,68 @@
+﻿---
+import { getCollection } from 'astro:content';
+import Badge from '@/components/ui/Badge.astro';
+
+const allPosts = await getCollection('blog');
+const posts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<section class="py-20 bg-(--color-bg)" aria-labelledby="blog-heading">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-4" data-aos="fade-up">
+      <div>
+        <span class="text-(--color-primary) font-semibold text-sm uppercase tracking-wider">From Our Blog</span>
+        <h2 id="blog-heading" class="text-3xl sm:text-4xl font-bold text-(--color-dark) mt-2">
+          Study Abroad Insights
+        </h2>
+      </div>
+      <a href="/blog" class="text-(--color-primary) font-semibold hover:underline whitespace-nowrap flex items-center gap-1.5">
+        View all posts
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {posts.map((post, i) => {
+        const date = post.data.pubDate.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+        return (
+          <article
+            class="group rounded-2xl bg-white border border-(--color-border) overflow-hidden hover:shadow-md transition-shadow duration-200"
+            data-aos="fade-up"
+            data-aos-delay={i * 80}
+          >
+            <!-- Placeholder thumbnail -->
+            <div class="h-48 bg-gradient-to-br from-(--color-primary) to-(--color-primary-dark) flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" class="h-16 w-16" aria-hidden="true">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+
+            <div class="p-6">
+              <div class="flex gap-2 flex-wrap mb-3">
+                {post.data.tags.slice(0, 2).map((tag) => (
+                  <Badge variant="default">{tag}</Badge>
+                ))}
+              </div>
+              <h3 class="font-bold text-(--color-dark) leading-snug mb-2 group-hover:text-(--color-primary) transition-colors">
+                <a href={`/blog/${post.id}`}>{post.data.title}</a>
+              </h3>
+              <p class="text-sm text-(--color-text-muted) line-clamp-2 mb-4">{post.data.description}</p>
+              <div class="flex items-center justify-between">
+                <time class="text-xs text-(--color-text-muted)" datetime={post.data.pubDate.toISOString()}>
+                  {date}
+                </time>
+                <a href={`/blog/${post.id}`} class="text-xs font-semibold text-(--color-primary) hover:underline">
+                  Read more →
+                </a>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>

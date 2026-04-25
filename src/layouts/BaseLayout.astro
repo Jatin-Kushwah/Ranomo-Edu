@@ -1,0 +1,108 @@
+---
+import { SEO } from 'astro-seo';
+import { GoogleFontsOptimizer } from 'astro-google-fonts-optimizer';
+import { ClientRouter } from 'astro:transitions';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import WhatsAppButton from '@/components/WhatsAppButton.astro';
+import '@/styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonicalURL?: string;
+  schema?: Record<string, unknown>;
+}
+
+const {
+  title,
+  description,
+  image = '/og/default.jpg',
+  canonicalURL = Astro.url.href,
+  schema,
+} = Astro.props;
+
+const siteName = 'Ranomo Edu';
+const siteURL = 'https://ranomoedu.com';
+
+const defaultSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: siteName,
+  url: siteURL,
+  description: 'Expert study abroad consulting — university selection, visa support, and scholarship guidance for students worldwide.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '123 MG Road',
+    addressLocality: 'Bengaluru',
+    postalCode: '560001',
+    addressCountry: 'IN',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+91-98765-43210',
+    contactType: 'customer service',
+    email: 'hello@ranomoedu.com',
+  },
+};
+
+const activeSchema = schema ?? defaultSchema;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1e40af" />
+
+    <SEO
+      title={`${title} | ${siteName}`}
+      description={description}
+      canonical={canonicalURL}
+      openGraph={{
+        basic: {
+          title: `${title} | ${siteName}`,
+          type: 'website',
+          image: `${siteURL}${image}`,
+          url: canonicalURL,
+        },
+        optional: {
+          description,
+          siteName,
+        },
+        image: {
+          alt: `${title} — ${siteName}`,
+        },
+      }}
+      twitter={{
+        card: 'summary_large_image',
+        title: `${title} | ${siteName}`,
+        description,
+        image: `${siteURL}${image}`,
+      }}
+    />
+
+    <GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(activeSchema)} />
+
+    <ClientRouter />
+  </head>
+  <body>
+    <Header />
+    <slot />
+    <Footer />
+    <WhatsAppButton />
+
+    <script>
+      import { aosInit } from '@/scripts/aosInit';
+      aosInit();
+      document.addEventListener('astro:after-swap', aosInit);
+    </script>
+  </body>
+</html>

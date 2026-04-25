@@ -1,0 +1,27 @@
+{
+  "name": "study-abroad-project",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.2",
+    "@lucide/astro": "^1.11.0",
+    "@tailwindcss/vite": "^4.2.4",
+    "@types/aos": "^3.0.7",
+    "aos": "^2.3.4",
+    "astro": "^6.1.9",
+    "astro-google-fonts-optimizer": "^0.2.2",
+    "astro-seo": "^1.1.0",
+    "flag-icons": "^7.5.0",
+    "tailwindcss": "^4.2.4"
+  }
+}

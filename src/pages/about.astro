@@ -1,0 +1,123 @@
+﻿---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const team = [
+  { name: 'Arjun Khanna', role: 'Founder & CEO', desc: 'Former international student at University of Edinburgh. 10+ years in education consulting.' },
+  { name: 'Meena Pillai', role: 'Head Counselor — UK & Ireland', desc: 'Masters from UCL. Helped 500+ students navigate UK visa and admissions.' },
+  { name: 'Vikram Doshi', role: 'Head Counselor — USA & Canada', desc: 'MBA from McGill University. Expert in North American admissions and PR pathways.' },
+  { name: 'Ananya Roy', role: 'Visa Specialist', desc: '7 years in immigration consulting. 98% visa approval record across all destinations.' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: 'Ranomo Edu',
+  url: 'https://ranomoedu.com',
+  description: 'Expert study abroad consulting founded in 2015. Helping Indian students achieve their global education goals.',
+  foundingDate: '2015',
+  numberOfEmployees: { '@type': 'QuantitativeValue', value: 25 },
+};
+---
+
+<BaseLayout
+  title="About Us"
+  description="Learn about Ranomo Edu — founded in 2015, we've helped 5,000+ students study at top universities in UK, USA, Canada, Australia, Germany, New Zealand, and Ireland."
+  schema={schema}
+>
+  <main>
+    <!-- Hero -->
+    <section class="bg-gradient-to-br from-(--color-primary) to-(--color-primary-dark) text-white py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <nav aria-label="Breadcrumb" class="mb-6">
+          <ol class="flex items-center gap-2 text-sm text-blue-200">
+            <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+            <li aria-hidden="true">›</li>
+            <li class="text-white font-medium" aria-current="page">About</li>
+          </ol>
+        </nav>
+        <h1 class="text-4xl sm:text-5xl font-bold mb-4">About Ranomo Edu</h1>
+        <p class="text-xl text-blue-100 max-w-3xl">Empowering Indian students to access world-class education since 2015.</p>
+      </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="py-20 bg-(--color-bg)">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div data-aos="fade-up">
+          <span class="text-(--color-primary) font-semibold text-sm uppercase tracking-wider">Our Mission</span>
+          <h2 class="text-3xl font-bold text-(--color-dark) mt-2 mb-4">Every Student Deserves a World-Class Education</h2>
+          <p class="text-(--color-text) leading-relaxed mb-4">
+            Ranomo Edu was founded in 2015 by Arjun Khanna, himself an international student who experienced first-hand how confusing and stressful the overseas education process can be. He set out to create a service that removes that confusion entirely.
+          </p>
+          <p class="text-(--color-text) leading-relaxed mb-4">
+            Today, we are a team of 25+ counselors, visa specialists, and alumni mentors who have collectively guided over 5,000 students to top universities across 7 countries — securing more than ₹50 crore in scholarships along the way.
+          </p>
+          <p class="text-(--color-text) leading-relaxed">
+            Our promise: transparent advice, meticulous preparation, and genuine care for each student's outcome — not just their application.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4" data-aos="fade-up" data-aos-delay="100">
+          {[
+            { value: '5,000+', label: 'Students Placed' },
+            { value: '98%', label: 'Visa Success Rate' },
+            { value: '₹50 Cr+', label: 'Scholarships Won' },
+            { value: '10+', label: 'Years of Experience' },
+          ].map(({ value, label }) => (
+            <div class="rounded-2xl bg-white border border-(--color-border) p-6 text-center shadow-sm">
+              <div class="text-3xl font-bold text-(--color-primary)">{value}</div>
+              <div class="text-sm text-(--color-text-muted) mt-1">{label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="py-20 bg-white">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14" data-aos="fade-up">
+          <span class="text-(--color-primary) font-semibold text-sm uppercase tracking-wider">Meet the Team</span>
+          <h2 class="text-3xl font-bold text-(--color-dark) mt-2">Your Counselors</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {team.map((member, i) => (
+            <div class="rounded-2xl border border-(--color-border) p-6 text-center bg-(--color-bg)" data-aos="fade-up" data-aos-delay={i * 80}>
+              <div class="w-16 h-16 rounded-full bg-(--color-primary) text-white flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                {member.name[0]}
+              </div>
+              <h3 class="font-bold text-(--color-dark)">{member.name}</h3>
+              <div class="text-(--color-primary) text-sm font-medium mt-1 mb-2">{member.role}</div>
+              <p class="text-xs text-(--color-text-muted) leading-relaxed">{member.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Accreditations -->
+    <section class="py-16 bg-(--color-bg) border-t border-(--color-border)">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-2xl font-bold text-(--color-dark) mb-8" data-aos="fade-up">Accreditations & Affiliations</h2>
+        <div class="flex flex-wrap justify-center gap-6" data-aos="fade-up">
+          {['AIRC Certified', 'ICEF Agency', 'British Council Partner', 'NAFSA Member', 'AIEA Member'].map((badge) => (
+            <span class="px-5 py-2.5 rounded-full border border-(--color-border) bg-white text-sm font-semibold text-(--color-text-muted) shadow-sm">
+              {badge}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-(--color-primary) text-white text-center">
+      <div class="mx-auto max-w-2xl px-4">
+        <h2 class="text-3xl font-bold mb-4" data-aos="fade-up">Ready to Begin Your Journey?</h2>
+        <p class="text-blue-100 mb-8" data-aos="fade-up">Book a free consultation with our team today.</p>
+        <a href="/contact" class="inline-flex items-center gap-2 bg-(--color-accent) text-white px-8 py-4 rounded-xl font-bold hover:bg-(--color-accent-dark) transition-colors" data-aos="fade-up">
+          Book Free Consultation →
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

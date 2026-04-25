@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"D:\\\\Dev Projects\\\\study-abroad-project\" remote -v)",
+      "Bash(git -C \"D:\\\\Dev Projects\\\\study-abroad-project\" status)",
+      "Bash(git -C \"D:\\\\Dev Projects\" remote -v)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git remote *)",
+      "Bash(git branch *)"
+    ]
+  }
+}

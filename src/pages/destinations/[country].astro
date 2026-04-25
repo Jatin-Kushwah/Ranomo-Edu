@@ -1,0 +1,177 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import { destinations } from '@/data/destinations';
+
+export function getStaticPaths() {
+  return destinations.map((dest) => ({
+    params: { country: dest.slug },
+    props: { destination: dest },
+  }));
+}
+
+const { destination: dest } = Astro.props;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ranomoedu.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Destinations', item: 'https://ranomoedu.com/destinations/' },
+    { '@type': 'ListItem', position: 3, name: dest.name, item: `https://ranomoedu.com/destinations/${dest.slug}/` },
+  ],
+};
+
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: `Study in ${dest.name}`,
+  serviceType: 'Study Abroad Consulting',
+  provider: {
+    '@type': 'EducationalOrganization',
+    name: 'Ranomo Edu',
+    url: 'https://ranomoedu.com',
+  },
+  areaServed: dest.name,
+  description: dest.overview,
+  breadcrumb: breadcrumbSchema,
+};
+---
+
+<BaseLayout
+  title={`Study in ${dest.name}`}
+  description={`${dest.tagline}. Complete guide to studying in ${dest.name} — universities, costs, visa requirements, scholarships, and intakes.`}
+  schema={pageSchema}
+>
+  <main>
+    <!-- Hero -->
+    <section class="bg-gradient-to-br from-(--color-primary) to-(--color-primary-dark) text-white py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <nav aria-label="Breadcrumb" class="mb-6">
+          <ol class="flex items-center gap-2 text-sm text-blue-200">
+            <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+            <li aria-hidden="true">›</li>
+            <li><a href="/destinations" class="hover:text-white transition-colors">Destinations</a></li>
+            <li aria-hidden="true">›</li>
+            <li class="text-white font-medium" aria-current="page">{dest.name}</li>
+          </ol>
+        </nav>
+
+        <div class="flex items-center gap-5 mb-6">
+          <span class={`fi fi-${dest.isoCode} text-6xl rounded`} aria-hidden="true"></span>
+          <h1 class="text-4xl sm:text-5xl font-bold">Study in {dest.name}</h1>
+        </div>
+        <p class="text-xl text-blue-100 max-w-3xl leading-relaxed">{dest.tagline}</p>
+      </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="py-16 bg-(--color-bg)">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+          <!-- Main content -->
+          <div class="lg:col-span-2 space-y-10">
+            <div data-aos="fade-up">
+              <h2 class="text-2xl font-bold text-(--color-dark) mb-4">Why Study in {dest.name}?</h2>
+              <p class="text-(--color-text) leading-relaxed">{dest.overview}</p>
+            </div>
+
+            <!-- Top Universities -->
+            <div data-aos="fade-up">
+              <h2 class="text-2xl font-bold text-(--color-dark) mb-4">Top Universities</h2>
+              <ul class="space-y-2">
+                {dest.topUniversities.map((uni) => (
+                  <li class="flex items-center gap-3">
+                    <span class="w-1.5 h-1.5 rounded-full bg-(--color-primary) flex-none" aria-hidden="true"></span>
+                    <span class="text-(--color-text)">{uni}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- Popular Courses -->
+            <div data-aos="fade-up">
+              <h2 class="text-2xl font-bold text-(--color-dark) mb-4">Popular Courses</h2>
+              {dest.popularCourses.length > 0 ? (
+                <div class="flex flex-wrap gap-2">
+                  {dest.popularCourses.map((course) => (
+                    <Badge variant="default">{course}</Badge>
+                  ))}
+                </div>
+              ) : (
+                <p class="text-(--color-text-muted) italic">Contact our counselors for course recommendations.</p>
+              )}
+            </div>
+
+            <!-- Entry Requirements -->
+            <div data-aos="fade-up">
+              <h2 class="text-2xl font-bold text-(--color-dark) mb-4">Entry Requirements</h2>
+              <p class="text-(--color-text) leading-relaxed">{dest.entryRequirements}</p>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="lg:col-span-1 space-y-6" aria-label="Key facts">
+            <!-- Costs -->
+            <div class="rounded-2xl border border-(--color-border) bg-white p-6 shadow-sm" data-aos="fade-up">
+              <h3 class="font-bold text-(--color-dark) mb-4">Cost Overview</h3>
+              <dl class="space-y-3 text-sm">
+                <div>
+                  <dt class="text-(--color-text-muted) mb-1">Annual Tuition</dt>
+                  <dd class="font-semibold text-(--color-dark)">{dest.avgTuitionRange}</dd>
+                </div>
+                <div class="border-t border-(--color-border) pt-3">
+                  <dt class="text-(--color-text-muted) mb-1">Annual Living Cost</dt>
+                  <dd class="font-semibold text-(--color-dark)">{dest.avgLivingCost}</dd>
+                </div>
+              </dl>
+            </div>
+
+            <!-- Intakes -->
+            <div class="rounded-2xl border border-(--color-border) bg-white p-6 shadow-sm" data-aos="fade-up">
+              <h3 class="font-bold text-(--color-dark) mb-4">Intake Periods</h3>
+              <ul class="space-y-2">
+                {dest.intakes.map((intake) => (
+                  <li class="flex items-center gap-2 text-sm">
+                    <span class="w-2 h-2 rounded-full bg-green-500 flex-none" aria-hidden="true"></span>
+                    {intake}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- CTA -->
+            <div class="rounded-2xl bg-(--color-primary) text-white p-6" data-aos="fade-up">
+              <h3 class="font-bold text-lg mb-2">Ready to Apply?</h3>
+              <p class="text-blue-100 text-sm mb-4">Get a personalized counseling session for studying in {dest.name}.</p>
+              <a href="/contact" class="block text-center bg-white text-(--color-primary) font-bold py-3 rounded-xl hover:bg-blue-50 transition-colors">
+                Get Free Counseling
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Other destinations -->
+    <section class="py-16 bg-white border-t border-(--color-border)">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl font-bold text-(--color-dark) mb-8">Explore Other Destinations</h2>
+        <div class="flex flex-wrap gap-3">
+          {destinations
+            .filter((d) => d.slug !== dest.slug)
+            .map((d) => (
+              <a
+                href={`/destinations/${d.slug}`}
+                class="flex items-center gap-2 px-4 py-2 rounded-xl border border-(--color-border) hover:border-(--color-primary) hover:text-(--color-primary) transition-colors text-sm"
+              >
+                <span class={`fi fi-${d.isoCode} rounded text-lg`} aria-hidden="true"></span>
+                {d.name}
+              </a>
+            ))}
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

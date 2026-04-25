@@ -1,0 +1,84 @@
+﻿---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { testimonials } from '@/data/testimonials';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Student Success Stories — Ranomo Edu',
+  itemListElement: testimonials.map((t, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Review',
+      reviewBody: t.quote,
+      author: { '@type': 'Person', name: t.name },
+      itemReviewed: { '@type': 'EducationalOrganization', name: 'Ranomo Edu' },
+      reviewRating: { '@type': 'Rating', ratingValue: 5, bestRating: 5 },
+    },
+  })),
+};
+---
+
+<BaseLayout
+  title="Student Success Stories"
+  description="Real stories from students who studied abroad with Ranomo Edu. From Delhi to Toronto, Mumbai to Manchester — read how we helped them achieve their dreams."
+  schema={schema}
+>
+  <main>
+    <!-- Hero -->
+    <section class="bg-gradient-to-br from-(--color-primary) to-(--color-primary-dark) text-white py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <nav aria-label="Breadcrumb" class="mb-6">
+          <ol class="flex items-center gap-2 text-sm text-blue-200">
+            <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+            <li aria-hidden="true">›</li>
+            <li class="text-white font-medium" aria-current="page">Success Stories</li>
+          </ol>
+        </nav>
+        <h1 class="text-4xl sm:text-5xl font-bold mb-4">Student Success Stories</h1>
+        <p class="text-xl text-blue-100 max-w-3xl">5,000+ students have trusted us to guide their study abroad journey. Here are some of their stories.</p>
+      </div>
+    </section>
+
+    <!-- Testimonials grid -->
+    <section class="py-20 bg-(--color-bg)">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {testimonials.map((t, i) => (
+            <article
+              class="rounded-2xl bg-white border border-(--color-border) p-7 shadow-sm"
+              data-aos="fade-up"
+              data-aos-delay={i * 80}
+            >
+              <div class="text-5xl text-(--color-primary)/20 font-serif leading-none mb-3" aria-hidden="true">"</div>
+              <blockquote class="text-(--color-text) leading-relaxed text-sm mb-6">{t.quote}</blockquote>
+              <div class="flex items-center gap-3 border-t border-(--color-border) pt-4">
+                <div class="w-12 h-12 rounded-full bg-(--color-primary) flex items-center justify-center text-white font-bold flex-shrink-0">
+                  {t.name[0]}
+                </div>
+                <div>
+                  <div class="font-semibold text-(--color-dark)">{t.name}</div>
+                  <div class="text-xs text-(--color-text-muted)">{t.origin}</div>
+                  <div class="text-xs text-(--color-primary) font-medium mt-0.5">{t.destination}</div>
+                </div>
+                <div class="ml-auto text-sm text-(--color-text-muted)">{t.year}</div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-(--color-primary) text-white text-center">
+      <div class="mx-auto max-w-2xl px-4">
+        <h2 class="text-3xl font-bold mb-4">Start Your Own Success Story</h2>
+        <p class="text-blue-100 mb-8">Book a free consultation and take the first step toward your dream university.</p>
+        <a href="/contact" class="inline-flex items-center gap-2 bg-white text-(--color-primary) px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition-colors">
+          Book Free Consultation →
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
