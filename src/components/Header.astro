@@ -1,4 +1,4 @@
-﻿---
+---
 import Button from '@/components/ui/Button.astro';
 
 const navLinks = [
@@ -54,6 +54,20 @@ function isActive(href: string): boolean {
 
     <!-- Desktop CTA + Mobile toggle -->
     <div class="flex items-center gap-3">
+      <!-- AI Counselor button (desktop, sm+) -->
+      <button
+        id="ai-counselor-btn"
+        type="button"
+        aria-haspopup="dialog"
+        class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-lg font-semibold text-sm text-(--color-accent) hover:bg-amber-50 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-accent) focus-visible:ring-offset-2 cursor-pointer"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0" aria-hidden="true">
+          <path d="M12 2.5c0 0 1.2 4.7 3 6.5 1.8 1.8 6.5 3 6.5 3s-4.7 1.2-6.5 3c-1.8 1.8-3 6.5-3 6.5s-1.2-4.7-3-6.5C7.2 13.2 2.5 12 2.5 12s4.7-1.2 6.5-3c1.8-1.8 3-6.5 3-6.5z"/>
+        </svg>
+        AI Counselor
+        <span class="h-2 w-2 rounded-full bg-(--color-accent) shrink-0" aria-label="Under maintenance"></span>
+      </button>
+
       <Button href="/contact" variant="primary" class="hidden sm:inline-flex">
         Free Consultation
       </Button>
@@ -90,8 +104,84 @@ function isActive(href: string): boolean {
           {label}
         </a>
       ))}
+
+      <!-- AI Counselor mobile nav item -->
+      <button
+        id="ai-counselor-btn-mobile"
+        type="button"
+        aria-haspopup="dialog"
+        class="flex w-full items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-(--color-accent) hover:bg-amber-50 transition-colors cursor-pointer focus-visible:outline-none"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0" aria-hidden="true">
+          <path d="M12 2.5c0 0 1.2 4.7 3 6.5 1.8 1.8 6.5 3 6.5 3s-4.7 1.2-6.5 3c-1.8 1.8-3 6.5-3 6.5s-1.2-4.7-3-6.5C7.2 13.2 2.5 12 2.5 12s4.7-1.2 6.5-3c1.8-1.8 3-6.5 3-6.5z"/>
+        </svg>
+        AI Counselor
+        <span class="h-2 w-2 rounded-full bg-(--color-accent) shrink-0 ml-auto" aria-label="Under maintenance"></span>
+      </button>
     </nav>
   </div>
+
+  <!-- AI Counselor maintenance dialog (inside header for transition:persist) -->
+  <dialog
+    id="ai-counselor-dialog"
+    aria-labelledby="ai-dialog-title"
+    aria-describedby="ai-dialog-desc"
+  >
+    <div class="p-6">
+      <!-- Header row -->
+      <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-(--color-accent)" aria-hidden="true">
+            <path d="M12 2.5c0 0 1.2 4.7 3 6.5 1.8 1.8 6.5 3 6.5 3s-4.7 1.2-6.5 3c-1.8 1.8-3 6.5-3 6.5s-1.2-4.7-3-6.5C7.2 13.2 2.5 12 2.5 12s4.7-1.2 6.5-3c1.8-1.8 3-6.5 3-6.5z"/>
+          </svg>
+          <h2 id="ai-dialog-title" class="text-lg font-bold text-(--color-dark)">AI Counselor</h2>
+        </div>
+        <button
+          id="ai-counselor-close"
+          type="button"
+          aria-label="Close"
+          class="flex items-center justify-center h-8 w-8 rounded-md text-(--color-text-muted) hover:bg-gray-100 hover:text-(--color-text) transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="h-4 w-4" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Status indicator -->
+      <div class="flex items-center gap-2 mb-4">
+        <span class="h-2.5 w-2.5 rounded-full bg-(--color-accent) shrink-0"></span>
+        <span class="text-amber-700 text-sm font-semibold">Under Maintenance</span>
+      </div>
+
+      <!-- Body copy -->
+      <p id="ai-dialog-desc" class="text-(--color-text) text-sm leading-relaxed mb-6">
+        Our AI Study Counselor is currently undergoing maintenance to serve you better.
+        Our expert counselors are available right now to answer your questions.
+      </p>
+
+      <!-- Fallback CTAs -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a
+          href="https://wa.me/917389027489?text=Hello%21+I%27m+interested+in+studying+abroad.+Could+you+help+me%3F"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-(--color-primary) text-white font-semibold text-sm hover:bg-(--color-primary-dark) transition-colors shadow-md hover:shadow-lg"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Chat on WhatsApp
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg border-2 border-(--color-primary) text-(--color-primary) font-semibold text-sm hover:bg-(--color-primary) hover:text-white transition-colors"
+        >
+          Book a Free Consultation
+        </a>
+      </div>
+    </div>
+  </dialog>
 </header>
 
 <style>
@@ -104,4 +194,51 @@ function isActive(href: string): boolean {
   #nav-toggle:checked ~ * .nav-bar-3 {
     transform: rotate(-45deg) translate(5px, -5px);
   }
+
+  #ai-counselor-dialog {
+    margin: auto;
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: 0;
+    width: calc(100% - 2rem);
+    max-width: 28rem;
+    box-shadow: var(--shadow-xl);
+    background: white;
+  }
+
+  #ai-counselor-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+  }
 </style>
+
+<script>
+  function initAiCounselorDialog() {
+    try {
+      const dialog = document.getElementById('ai-counselor-dialog') as HTMLDialogElement | null;
+      const btnDesktop = document.getElementById('ai-counselor-btn');
+      const btnMobile = document.getElementById('ai-counselor-btn-mobile');
+      const btnClose = document.getElementById('ai-counselor-close');
+
+      if (!dialog) return;
+
+      btnDesktop?.addEventListener('click', () => dialog.showModal());
+      btnMobile?.addEventListener('click', () => dialog.showModal());
+      btnClose?.addEventListener('click', () => dialog.close());
+
+      // Close on backdrop click
+      dialog.addEventListener('click', (e) => {
+        if (e.target === dialog) dialog.close();
+      });
+    } catch (_e) {
+      // graceful degradation — dialog remains non-functional but page layout is unaffected
+    }
+  }
+
+  initAiCounselorDialog();
+
+  // Close the dialog before any View Transition page swap
+  document.addEventListener('astro:before-swap', () => {
+    (document.getElementById('ai-counselor-dialog') as HTMLDialogElement | null)?.close();
+  });
+</script>
