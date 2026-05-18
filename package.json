@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "dev:netlify": "netlify dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -14,6 +15,7 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
+    "@google/genai": "^2.4.0",
     "@lucide/astro": "^1.11.0",
     "@tailwindcss/vite": "^4.2.4",
     "@types/aos": "^3.0.7",

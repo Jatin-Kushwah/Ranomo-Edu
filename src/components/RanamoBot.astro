@@ -1,0 +1,302 @@
+---
+---
+
+<div transition:persist="chat-widget" class="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3">
+
+  <!-- Floating bubble -->
+  <button
+    id="ranamo-bubble"
+    type="button"
+    aria-label="Open RanamoBot"
+    aria-expanded="false"
+    title="Chat with RanamoBot"
+    class="h-14 w-14 rounded-full bg-(--color-primary) text-white shadow-lg hover:scale-105 active:scale-95 transition-transform flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) focus-visible:ring-offset-2"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6" aria-hidden="true">
+      <path d="M12 2.5c0 0 1.2 4.7 3 6.5 1.8 1.8 6.5 3 6.5 3s-4.7 1.2-6.5 3c-1.8 1.8-3 6.5-3 6.5s-1.2-4.7-3-6.5C7.2 13.2 2.5 12 2.5 12s4.7-1.2 6.5-3c1.8-1.8 3-6.5 3-6.5z"/>
+    </svg>
+  </button>
+
+  <!-- Chat panel -->
+  <div
+    id="ranamo-panel"
+    class="hidden w-[380px] max-w-[calc(100vw-2rem)] max-h-[calc(100dvh-7rem)] rounded-2xl shadow-2xl bg-white border border-(--color-border) flex flex-col overflow-hidden"
+  >
+    <!-- Panel header -->
+    <div class="flex items-center gap-3 px-4 py-3 border-b border-(--color-border) shrink-0">
+      <div class="h-8 w-8 rounded-full bg-(--color-accent) flex items-center justify-center shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="h-4 w-4" aria-hidden="true">
+          <path d="M12 2.5c0 0 1.2 4.7 3 6.5 1.8 1.8 6.5 3 6.5 3s-4.7 1.2-6.5 3c-1.8 1.8-3 6.5-3 6.5s-1.2-4.7-3-6.5C7.2 13.2 2.5 12 2.5 12s4.7-1.2 6.5-3c1.8-1.8 3-6.5 3-6.5z"/>
+        </svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="font-bold text-sm text-(--color-dark)">RanamoBot</p>
+        <div class="flex items-center gap-1.5">
+          <span class="h-2 w-2 rounded-full bg-green-400 shrink-0"></span>
+          <span class="text-xs text-(--color-text-muted)">Online</span>
+        </div>
+      </div>
+      <button
+        id="ranamo-close"
+        type="button"
+        aria-label="Close chat"
+        class="h-8 w-8 flex items-center justify-center rounded-md text-(--color-text-muted) hover:bg-gray-100 hover:text-(--color-text) transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="h-4 w-4" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Message area -->
+    <div id="ranamo-messages" class="flex-1 overflow-y-auto p-4 flex flex-col gap-3" aria-live="polite" aria-label="Chat messages">
+
+      <!-- Typing indicator (hidden by default) -->
+      <div id="ranamo-typing" class="hidden flex items-start gap-2">
+        <div class="h-6 w-6 rounded-full bg-(--color-accent) flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="h-3 w-3" aria-hidden="true">
+            <path d="M12 2.5c0 0 1.2 4.7 3 6.5 1.8 1.8 6.5 3 6.5 3s-4.7 1.2-6.5 3c-1.8 1.8-3 6.5-3 6.5s-1.2-4.7-3-6.5C7.2 13.2 2.5 12 2.5 12s4.7-1.2 6.5-3c1.8-1.8 3-6.5 3-6.5z"/>
+          </svg>
+        </div>
+        <div class="bg-gray-100 rounded-2xl rounded-bl-sm px-4 py-2 flex items-center gap-1">
+          <span class="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay:0ms"></span>
+          <span class="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay:150ms"></span>
+          <span class="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay:300ms"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick-reply chips -->
+    <div id="ranamo-chips" class="flex flex-wrap gap-2 px-4 pb-3 shrink-0">
+      <button type="button" class="ranamo-chip border border-(--color-primary) text-(--color-primary) text-xs px-3 py-1.5 rounded-full hover:bg-blue-50 cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)">What countries do you cover?</button>
+      <button type="button" class="ranamo-chip border border-(--color-primary) text-(--color-primary) text-xs px-3 py-1.5 rounded-full hover:bg-blue-50 cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)">How does Ranamo's process work?</button>
+      <button type="button" class="ranamo-chip border border-(--color-primary) text-(--color-primary) text-xs px-3 py-1.5 rounded-full hover:bg-blue-50 cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)">How much does studying abroad cost?</button>
+      <button type="button" class="ranamo-chip border border-(--color-primary) text-(--color-primary) text-xs px-3 py-1.5 rounded-full hover:bg-blue-50 cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)">Scholarship &amp; visa help</button>
+    </div>
+
+    <!-- Input row -->
+    <div class="border-t border-(--color-border) p-3 flex gap-2 shrink-0">
+      <textarea
+        id="ranamo-input"
+        rows="1"
+        placeholder="Ask me anything…"
+        class="flex-1 resize-none text-sm text-(--color-text) placeholder:text-(--color-text-muted) rounded-lg border border-(--color-border) px-3 py-2 max-h-24 overflow-y-auto focus:outline-none focus:ring-2 focus:ring-(--color-primary) focus:border-transparent"
+        aria-label="Message input"
+      ></textarea>
+      <button
+        id="ranamo-send"
+        type="button"
+        disabled
+        class="h-9 w-9 shrink-0 rounded-lg bg-(--color-primary) text-white flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:opacity-90 transition-opacity cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) focus-visible:ring-offset-2"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+          <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"/>
+        </svg>
+        <span class="sr-only">Send message</span>
+      </button>
+    </div>
+
+    <!-- Footer CTAs -->
+    <div class="border-t border-(--color-border) px-3 py-2 flex gap-2 shrink-0">
+      <a
+        href="https://wa.me/917389027489?text=Hello%21+I%27m+interested+in+studying+abroad.+Could+you+help+me%3F"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex-1 flex items-center justify-center gap-1.5 bg-[#25d366] text-white text-xs font-semibold px-3 py-2 rounded-lg hover:opacity-90 transition-opacity"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 shrink-0" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Chat on WhatsApp
+        <span class="sr-only">(opens in new tab)</span>
+      </a>
+      <a
+        href="/contact"
+        class="flex-1 flex items-center justify-center gap-1.5 border border-(--color-primary) text-(--color-primary) text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-50 transition-colors"
+      >
+        Book Consultation
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  let messages: Array<{ role: 'user' | 'assistant'; content: string }> = [];
+  let isOpen = false;
+  let hasMessagedOnce = false;
+  let welcomeSent = false;
+
+  function botAvatarSVG(): string {
+    return `<div class="h-6 w-6 rounded-full bg-(--color-accent) flex items-center justify-center shrink-0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="h-3 w-3" aria-hidden="true"><path d="M12 2.5c0 0 1.2 4.7 3 6.5 1.8 1.8 6.5 3 6.5 3s-4.7 1.2-6.5 3c-1.8 1.8-3 6.5-3 6.5s-1.2-4.7-3-6.5C7.2 13.2 2.5 12 2.5 12s4.7-1.2 6.5-3c1.8-1.8 3-6.5 3-6.5z"/></svg></div>`;
+  }
+
+  function appendUserMessage(text: string): void {
+    const el = document.createElement('div');
+    el.className = 'flex justify-end';
+    el.innerHTML = `<div class="self-end bg-(--color-primary) text-white rounded-2xl rounded-br-sm px-4 py-2 max-w-[80%] text-sm">${escapeHtml(text)}</div>`;
+    insertBeforeTyping(el);
+  }
+
+  function appendBotMessage(text: string): void {
+    const el = document.createElement('div');
+    el.className = 'flex items-start gap-2';
+    el.innerHTML = `${botAvatarSVG()}<div class="bg-gray-100 text-(--color-text) rounded-2xl rounded-bl-sm px-4 py-2 max-w-[80%] text-sm">${escapeHtml(text)}</div>`;
+    insertBeforeTyping(el);
+  }
+
+  function insertBeforeTyping(el: HTMLElement): void {
+    const messagesEl = document.getElementById('ranamo-messages');
+    const typing = document.getElementById('ranamo-typing');
+    if (messagesEl && typing) {
+      messagesEl.insertBefore(el, typing);
+    }
+  }
+
+  function escapeHtml(text: string): string {
+    return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function scrollToBottom(): void {
+    const el = document.getElementById('ranamo-messages');
+    if (el) el.scrollTop = el.scrollHeight;
+  }
+
+  function showTyping(): void {
+    document.getElementById('ranamo-typing')?.classList.remove('hidden');
+    scrollToBottom();
+  }
+
+  function hideTyping(): void {
+    document.getElementById('ranamo-typing')?.classList.add('hidden');
+  }
+
+  async function sendMessage(text: string): Promise<void> {
+    if (!text.trim()) return;
+
+    messages.push({ role: 'user', content: text });
+    appendUserMessage(text);
+    scrollToBottom();
+
+    const input = document.getElementById('ranamo-input') as HTMLTextAreaElement | null;
+    if (input) {
+      input.value = '';
+      input.style.height = 'auto';
+    }
+
+    const sendBtn = document.getElementById('ranamo-send') as HTMLButtonElement | null;
+    if (sendBtn) sendBtn.disabled = true;
+
+    if (!hasMessagedOnce) {
+      hasMessagedOnce = true;
+      document.getElementById('ranamo-chips')?.classList.add('hidden');
+    }
+
+    showTyping();
+
+    try {
+      const res = await fetch('/.netlify/functions/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages }),
+      });
+
+      const data = await res.json() as { reply?: string; error?: string };
+      hideTyping();
+
+      if (data.reply) {
+        messages.push({ role: 'assistant', content: data.reply });
+        appendBotMessage(data.reply);
+      } else {
+        const fallback = "I'm having trouble connecting right now. Please reach us on WhatsApp or book a consultation using the buttons below.";
+        messages.push({ role: 'assistant', content: fallback });
+        appendBotMessage(fallback);
+      }
+    } catch {
+      hideTyping();
+      const fallback = "I'm having trouble connecting right now. Please reach us on WhatsApp or book a consultation using the buttons below.";
+      messages.push({ role: 'assistant', content: fallback });
+      appendBotMessage(fallback);
+    }
+
+    scrollToBottom();
+  }
+
+  function openWidget(): void {
+    const panel = document.getElementById('ranamo-panel');
+    const bubble = document.getElementById('ranamo-bubble');
+    if (!panel || !bubble) return;
+
+    panel.classList.remove('hidden');
+    bubble.classList.add('hidden');
+    bubble.setAttribute('aria-expanded', 'true');
+    isOpen = true;
+
+    if (!welcomeSent) {
+      welcomeSent = true;
+      const welcome = "Hi! I'm RanamoBot 👋 Ask me anything about studying abroad or how Ranamo Edu can help you.";
+      messages.push({ role: 'assistant', content: welcome });
+      appendBotMessage(welcome);
+    }
+
+    scrollToBottom();
+  }
+
+  function closeWidget(): void {
+    const panel = document.getElementById('ranamo-panel');
+    const bubble = document.getElementById('ranamo-bubble');
+    panel?.classList.add('hidden');
+    bubble?.classList.remove('hidden');
+    bubble?.setAttribute('aria-expanded', 'false');
+    isOpen = false;
+  }
+
+  let listenersAttached = false;
+
+  function initRanamoBot(): void {
+    if (!listenersAttached) {
+      const bubble = document.getElementById('ranamo-bubble');
+      const closeBtn = document.getElementById('ranamo-close');
+      const input = document.getElementById('ranamo-input') as HTMLTextAreaElement | null;
+      const sendBtn = document.getElementById('ranamo-send') as HTMLButtonElement | null;
+      const chips = document.querySelectorAll<HTMLButtonElement>('.ranamo-chip');
+
+      bubble?.addEventListener('click', openWidget);
+      closeBtn?.addEventListener('click', closeWidget);
+
+      input?.addEventListener('input', () => {
+        if (!input || !sendBtn) return;
+        input.style.height = 'auto';
+        input.style.height = `${input.scrollHeight}px`;
+        sendBtn.disabled = input.value.trim().length === 0;
+      });
+
+      input?.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          if (input.value.trim()) sendMessage(input.value.trim());
+        }
+      });
+
+      sendBtn?.addEventListener('click', () => {
+        if (input?.value.trim()) sendMessage(input.value.trim());
+      });
+
+      chips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          sendMessage(chip.textContent ?? '');
+        });
+      });
+
+      window.addEventListener('chat:open', openWidget);
+      listenersAttached = true;
+    }
+
+    (window as Window & { __chatWidget?: { open: () => void; close: () => void } }).__chatWidget = {
+      open: openWidget,
+      close: closeWidget,
+    };
+  }
+
+  initRanamoBot();
+  document.addEventListener('astro:page-load', initRanamoBot);
+</script>
